@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
         Vector2 lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * speed);
 
-        if (gameObject.transform.position.y < -5)
+        if (gameObject.transform.position.y < -6 || gameObject.transform.position.y > 6 || gameObject.transform.position.x < -12 || gameObject.transform.position.x > 12)
         {
             Destroy(gameObject);
         }

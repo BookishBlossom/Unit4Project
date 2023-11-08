@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public bool isOnGround = true;
     public bool hasPowerup;
-    private float powerupStrength = 15.0f;
+    private float powerupStrength = 50.0f;
     public GameObject powerupIndicator;
 
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
         {
             isOnGround = false;
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             
         }
     }
@@ -40,14 +40,15 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
-            if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
-            {
-                Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
-                Vector3 awayFromPlayer = (collision.gameObject.transform.position - transform.position);
+            
+        }
+        if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        {
+            Rigidbody2D enemyRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 awayFromPlayer = (collision.gameObject.transform.position - transform.position);
 
-                Debug.Log("Collided with " + collision.gameObject.name + " with powerup set to " + hasPowerup);
-                enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode2D.Impulse);
-            }
+            Debug.Log("Collided with " + collision.gameObject.name + " with powerup set to " + hasPowerup);
+            enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode2D.Impulse);
         }
     }
 
